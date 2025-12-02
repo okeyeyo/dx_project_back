@@ -21,6 +21,13 @@ public class UserController {
 
     @PostMapping("/login")
     public UserEntity login(@RequestBody LoginDTO loginDTO) {
+        // 1. 아이디만으로 검색: 아이디가 DB에 있는지 확인합니다.
+        Optional<UserEntity> userCheck = userRepository.findByEmail(loginDTO.getEmail());
+
+        if (userCheck.isEmpty()) {
+            System.out.println("❌ [인증 실패] 아이디(ID)가 DB에 존재하지 않습니다. (최초 불일치)");
+            return null; // 아이디가 없으면 즉시 실패
+        }
 
         // 1. DTO에 회원 찾기
         Optional<UserEntity> user = userRepository.findByEmailAndPassword(

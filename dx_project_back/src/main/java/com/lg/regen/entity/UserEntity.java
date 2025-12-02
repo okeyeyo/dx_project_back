@@ -19,6 +19,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password; // 비밀번호
 
+    @Column(name="name")
     private String name; // 이름 (예: DemoUser)
 
     // --- 무슬림 루틴 앱을 위한 핵심 데이터 ---
