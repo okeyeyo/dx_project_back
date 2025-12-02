@@ -1,6 +1,5 @@
 package com.lg.regen.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.lg.regen.dto.LoginDTO;
 import com.lg.regen.entity.UserEntity;
 import com.lg.regen.repository.UserRepository;
