@@ -19,7 +19,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password; // 비밀번호
 
-    private String name; // 닉네임 (예: DemoUser)
+    private String name; // 이름 (예: DemoUser)
 
     // --- 무슬림 루틴 앱을 위한 핵심 데이터 ---
     // 나중에 이 좌표로 '기도 시간'을 계산합니다.
