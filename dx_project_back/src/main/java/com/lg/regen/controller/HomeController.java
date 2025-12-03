@@ -43,13 +43,12 @@ public class HomeController {
         // 날씨 서비스만 호출
         WeatherDTO weatherData = weatherService.getCurrentWeather(lat, lon, region);
 
-        // 데이터 통합 (기도 시간은 나중에 수정 바람)
+        // 데이터 통합
         return DashboardResponseDTO.builder()
                 .userId(user.getId())
                 .userName(user.getName())
                 .region(region)
                 .weatherData(weatherData)
-                .prayerTimes(null)
                 .build();
     }
 }

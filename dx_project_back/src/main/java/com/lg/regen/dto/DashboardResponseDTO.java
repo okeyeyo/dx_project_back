@@ -16,9 +16,6 @@ public class DashboardResponseDTO { // 통합 대시보드 API (서버 호출 �
     // 날씨 정보 (WeatherService)
     private WeatherDTO weatherData;
 
-    // 기도 시간 정보 (PrayerService)
-    private PrayerTimeResponseDTO prayerTimes;
-
     // 전력 정보 추가
 
 }
