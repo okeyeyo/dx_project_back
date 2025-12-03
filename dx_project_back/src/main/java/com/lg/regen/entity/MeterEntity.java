@@ -30,22 +30,25 @@ public class MeterEntity {
 
     // 선불 / 후불 타입 (지금은 선불(PREPAID)만 사용)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentType paymentType = PaymentType.PREPAID;
+    @Column(name = "paymentType", nullable = false, length = 20)
+    private PaymentType paymentType;
 
     // 계량기 브랜드 (ITRON / HEXING / ACTARIS)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(name = "brand", nullable = false, length = 20)
     private MeterBrand brand;
 
     // ───────── 선불(Prepaid) 관련 필드 ─────────
 
     // 지금까지 충전된 총 토큰 양 (kWh 단위)
-    @Column(nullable = false)
+    @Column(name = "totalTokenKwh", nullable = false)
     private double totalTokenKwh = 0.0;
 
     // ───────── 공통 메타 데이터 ─────────
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
+
+    @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
     @PrePersist

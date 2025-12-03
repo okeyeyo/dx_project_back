@@ -35,13 +35,13 @@ public class TokenTopUpEntity {
     private MeterBrand brand;
 
     // 이번 충전으로 추가된 토큰 양 (kWh 단위)
-    @Column(nullable = false)
+    @Column(name = "amount_kwh", nullable = false)
     private double amountKwh;
 
     // 충전 일시
     // - 기본값: 엔티티 생성 시점의 현재 시각
-    @Column(nullable = false)
-    private LocalDateTime purchasedAt = LocalDateTime.now();
+    @Column(name = "purchased_at", nullable = false)
+    private LocalDateTime purchasedAt;
 
      // 엔티티가 처음 저장될 때 호출됨.
      // - purchasedAt이 비어있다면 현재 시간으로 세팅.
