@@ -16,6 +16,11 @@ public class DashboardResponseDTO { // 통합 대시보드 API (서버 호출 �
     // 날씨 정보 (WeatherService)
     private WeatherDTO weatherData;
 
-    // 전력 정보 추가
+    // 선불 계량기 (없으면 null)
+    private PrepaidDashboardDTO prepaidDashboard;
+
+    // 후불 계량기 (없으면 null)
+    // 실제 클래스명은 프로젝트에 있는 PostpaidDashboardDTO를 import해서 사용
+    private PostpaidDashboardDTO postpaidDashboard;
 
 }
