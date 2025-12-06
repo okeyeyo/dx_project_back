@@ -38,10 +38,8 @@ public class HomeController {
     @GetMapping("/{userID}")
     public DashboardResponseDTO getDashboardData(@PathVariable Long userID) {
         // 사용자 찾기
-        Optional<UserEntity> userEntityOptional = userRepository.findById(userID);
-        if(userEntityOptional.isEmpty()) return null;
-
-        UserEntity user = userEntityOptional.get();
+        UserEntity user = userRepository.findById(userID)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 유저입니다."));
 
         // 위치 정보
         double lat = user.getLatitude() != null ? user.getLatitude() : 0.0;
