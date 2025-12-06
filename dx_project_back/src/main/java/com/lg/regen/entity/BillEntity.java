@@ -2,8 +2,7 @@ package com.lg.regen.entity;
 
 import com.lg.regen.enums.BillStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,10 +12,13 @@ import java.time.LocalDateTime;
  * 후불(Postpaid) 전력 요금 청구서를 나타내는 JPA 엔티티.
  * - 한 계량기(MeterEntity)에 대해 월별/기간별로 청구서가 여러 개 생길 수 있음.
  */
-@Entity
-@Table(name = "bills")   // 실제 테이블 이름: bills
 @Getter
 @Setter
+@Entity
+@Table(name = "bills")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
 public class BillEntity {
     // 기본 키(Primary Key)
@@ -45,10 +47,10 @@ public class BillEntity {
 
     // 이번 청구 금액
     @Column(nullable = false)
-    private double amount;
+    private Long amount;
 
     // 통화 단위 (예: "IDR", "KRW")
-    @Column(length = 20)
+    @Column(nullable = false, length = 20)
     private String currency = "IDR";
 
     // 청구서 상태 (UNPAID / PAID)
@@ -57,8 +59,26 @@ public class BillEntity {
     private BillStatus status = BillStatus.UNPAID;
 
     // 결제 기한 (예: 매월 5일)
+    @Column(nullable = false)
     private LocalDate dueDate;
 
     // 실제 결제 완료 시각 (결제된 경우에만 값 존재)
     private LocalDateTime paidAt;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
