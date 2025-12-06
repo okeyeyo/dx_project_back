@@ -36,7 +36,7 @@ public class HomeController {
 
 
     @GetMapping("/{userID}")
-    public DashboardResponseDTO getDashboardDate(@PathVariable Long userID) {
+    public DashboardResponseDTO getDashboardData(@PathVariable Long userID) {
         // 사용자 찾기
         Optional<UserEntity> userEntityOptional = userRepository.findById(userID);
         if(userEntityOptional.isEmpty()) return null;
@@ -46,7 +46,7 @@ public class HomeController {
         // 위치 정보
         double lat = user.getLatitude() != null ? user.getLatitude() : 0.0;
         double lon = user.getLongitude() != null ? user.getLongitude() : 0.0;
-        String region = user.getRegion() != null ? user.getRegion() : "Unkown";
+        String region = user.getRegion() != null ? user.getRegion() : "Unknown";
 
         // 날씨 서비스만 호출
         WeatherDTO weatherData = weatherService.getCurrentWeather(lat, lon, region);
