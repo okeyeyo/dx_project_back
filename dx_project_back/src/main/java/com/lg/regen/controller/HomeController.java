@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/home") // 주소 : http://localhost:8082/api/home
+@RequestMapping("/home") // 주소 : http://localhost:8082/home
 public class HomeController {
     @Autowired
     private UserRepository userRepository;
