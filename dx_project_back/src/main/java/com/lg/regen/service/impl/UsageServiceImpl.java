@@ -21,9 +21,8 @@ public class UsageServiceImpl implements UsageService {
     @Override
     public double getTodayUsageKwh(UserEntity user, LocalDate today) {
         return usageLogRepository.findByUserAndDate(user, today)
-                .stream()
-                .mapToDouble(UsageLogEntity::getUsageKwh)
-                .sum();
+                .map(UsageLogEntity::getUsageKwh)
+                .orElse(0.0);
     }
 
     @Override
@@ -40,17 +39,16 @@ public class UsageServiceImpl implements UsageService {
     @Override
     @Transactional
     public void upsertDailyUsage(UserEntity user, LocalDate date, double usageKwh) {
-        // 같은 날짜 기록이 있으면 첫 번째 것만 사용
-        List<UsageLogEntity> logs = usageLogRepository.findByUserAndDate(user, date);
+        // ✅ 같은 날짜(user + date) 로그가 있으면 그대로 가져오고, 없으면 새로 생성
+        UsageLogEntity log = usageLogRepository.findByUserAndDate(user, date)
+                .orElseGet(() -> {
+                    UsageLogEntity e = new UsageLogEntity();
+                    e.setUser(user);
+                    e.setDate(date);
+                    return e;
+                });
 
-        UsageLogEntity log;
-        if (logs.isEmpty()) {
-            log = new UsageLogEntity();
-            log.setUser(user);
-            log.setDate(date);
-        } else {
-            log = logs.get(0);
-        }
+        // 항상 최신 사용량으로 덮어쓰기
         log.setUsageKwh(usageKwh);
 
         usageLogRepository.save(log);

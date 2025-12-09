@@ -8,7 +8,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usage_logs")
+@Table(
+        name = "usage_logs",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_usage_logs_user_date",
+                        columnNames = {"user_id", "date"}
+                )
+        }
+)
 @Getter
 @Setter
 public class UsageLogEntity {
@@ -31,10 +39,21 @@ public class UsageLogEntity {
     private double usageKwh;
 
     // 생성 시간
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    // 수정 시간(선택, 있으면 디버깅에 도움)
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 }
